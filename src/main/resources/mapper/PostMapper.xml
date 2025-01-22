@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.maeulbang.MBB.mapper.post.PostMapper">
+    <insert id="insertPost">
+        insert into post (title,content) values (#{title},#{content})
+    </insert>
+    <select id="selectAllPosts" resultType="kr.co.maeulbang.MBB.DTO.PostDto">
+        select * from post
+    </select>
+
+
+
+</mapper>
