@@ -26,9 +26,19 @@ public class PostController {
     }
 
     @GetMapping("/show")
-    public String showPost(Model model){
-        model.addAttribute("posts",postService.getAllPosts());
+    public String showPost(@RequestParam(name ="page", defaultValue = "1")int page,
+                           @RequestParam(name ="size", defaultValue = "10")int size,
+                           Model model){
+
+        model.addAttribute("pageDto",postService.getPostsForShow(page,size));
+        //
         return "post/show";
+    }
+
+    @GetMapping("/show/{id}")
+    public String showPost(@PathVariable("id") int id, Model model){
+        model.addAttribute("post",postService.getPostById(id));
+        return "post/detail";
     }
 
 }

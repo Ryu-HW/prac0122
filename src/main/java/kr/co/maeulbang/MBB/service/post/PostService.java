@@ -1,5 +1,6 @@
 package kr.co.maeulbang.MBB.service.post;
 
+import kr.co.maeulbang.MBB.DTO.PageDto;
 import kr.co.maeulbang.MBB.DTO.PostDto;
 import kr.co.maeulbang.MBB.mapper.post.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,16 @@ public class PostService {
         postMapper.insertPost(post);
     }
 
-    public List<PostDto> getAllPosts(){
-        return postMapper.selectAllPosts();
+    public PageDto<PostDto> getPostsForShow(int page, int size){
+        int offset = (page-1)*size;
+        List<PostDto> posts = postMapper.selectPostsForShow(size,offset);
+        long numOfAllPosts = postMapper.countAllPosts();
+        PageDto<PostDto> pageDto = new PageDto<>(page, size, numOfAllPosts, posts);
+        return pageDto;
+
+    }
+
+    public PostDto getPostById(int id){
+        return postMapper.selectPostById(id);
     }
 }

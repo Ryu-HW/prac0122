@@ -9,5 +9,7 @@ import java.util.List;
 public interface PostMapper {
 
     public void insertPost( PostDto post);
-    public List<PostDto> selectAllPosts();
+    public List<PostDto> selectPostsForShow(int limit,int offset);
+    public PostDto selectPostById(int id);
+    public long countAllPosts();
 }

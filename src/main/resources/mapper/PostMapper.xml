@@ -3,11 +3,20 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.maeulbang.MBB.mapper.post.PostMapper">
-    <insert id="insertPost">
+    <insert id="insertPost" useGeneratedKeys="true" keyProperty="id">
         insert into post (title,content) values (#{title},#{content})
     </insert>
-    <select id="selectAllPosts" resultType="kr.co.maeulbang.MBB.DTO.PostDto">
-        select * from post
+
+    <select id="selectPostsForShow" resultType="kr.co.maeulbang.MBB.DTO.PostDto">
+        select * from post order by id DESC limit #{limit} offset #{offset};
+    </select>
+
+    <select id="selectPostById" resultType="kr.co.maeulbang.MBB.DTO.PostDto">
+        select * from post where id = #{id}
+    </select>
+
+    <select id="countAllPosts" resultType="long">
+        select count(*) from post
     </select>
 
 
