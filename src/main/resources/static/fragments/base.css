@@ -1,0 +1,7 @@
+.base-container{
+    position: relative;
+    width : 550px;
+    height : 600px;
+    margin: 100px auto;
+    overflow : hidden;
+}

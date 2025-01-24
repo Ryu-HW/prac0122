@@ -6,13 +6,7 @@
 <head>
     <title>Title</title>
   <th:block layout:fragment="css">
-    <style>
-      .custom-size {
-          width: 300px;
-          height: 300px;
-          margin: 0 230px;
-      }
-    </style>
+    <link rel="stylesheet" th:href="@{/fragments/show.css}">
   </th:block>
 </head>
 <body>
@@ -46,10 +40,39 @@
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li >
-
-<!--      <li class="page-item"><a class="page-link" href="#">2</a></li>-->
-
-      <li class="page-item">
+        <th:block th:each="num: ${#numbers.sequence(-1,1)}">
+          <th:block th:if="${pageDto.currentPage == 1}">
+            <li class="page-item">
+              <a th:class="${pageDto.currentPage == (pageDto.currentPage+num+1) ? 'page-link active' : 'page-link'}"
+                 th:text="${pageDto.currentPage == 1 ? (pageDto.currentPage+num+1) :
+          pageDto.currentPage == pageDto.totalPageNum ? (pageDto.currentPage+num-1) : (pageDto.currentPage+num)}"
+                 th:href="@{/post/show?page={page}&size={size}(page=(${pageDto.currentPage == 1 ? (pageDto.currentPage+num+1) :
+          pageDto.currentPage == pageDto.totalPageNum ? (pageDto.currentPage+num-1) : (pageDto.currentPage+num)}),size=${pageDto.size})}">
+              </a>
+            </li>
+          </th:block>
+          <th:block th:if="${pageDto.currentPage == pageDto.totalPageNum}">
+            <li class="page-item">
+              <a th:class="${pageDto.currentPage == (pageDto.currentPage+num-1) ? 'page-link active' : 'page-link'}"
+                 th:text="${pageDto.currentPage == 1 ? (pageDto.currentPage+num+1) :
+          pageDto.currentPage == pageDto.totalPageNum ? (pageDto.currentPage+num-1) : (pageDto.currentPage+num)}"
+                 th:href="@{/post/show?page={page}&size={size}(page=(${pageDto.currentPage == 1 ? (pageDto.currentPage+num+1) :
+          pageDto.currentPage == pageDto.totalPageNum ? (pageDto.currentPage+num-1) : (pageDto.currentPage+num)}),size=${pageDto.size})}">
+              </a>
+            </li>
+          </th:block>
+          <th:block th:if="${pageDto.currentPage != 1 and pageDto.currentPage != pageDto.totalPageNum}">
+            <li class="page-item">
+              <a th:class="${pageDto.currentPage == (pageDto.currentPage+num) ? 'page-link active' : 'page-link'}"
+                 th:text="${pageDto.currentPage == 1 ? (pageDto.currentPage+num+1) :
+            pageDto.currentPage == pageDto.totalPageNum ? (pageDto.currentPage+num-1) : (pageDto.currentPage+num)}"
+                 th:href="@{/post/show?page={page}&size={size}(page=(${pageDto.currentPage == 1 ? (pageDto.currentPage+num+1) :
+            pageDto.currentPage == pageDto.totalPageNum ? (pageDto.currentPage+num-1) : (pageDto.currentPage+num)}),size=${pageDto.size})}">
+              </a>
+            </li>
+          </th:block>
+        </th:block>
+      <li th:class="${pageDto.currentPage == pageDto.totalPageNum ? 'page-item disabled' : 'page-item'}">
         <a class="page-link" th:href="@{/post/show?page={page}&size={size}(page=(${pageDto.currentPage}+1),size=${pageDto.size})}" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>
